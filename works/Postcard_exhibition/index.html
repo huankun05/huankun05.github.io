@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>京·华 - 系列展示</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- CDN 加载 html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="title-container">
+            <img src="images/title.png" alt="京·华系列" class="title-image" onerror="this.style.display='none';this.parentElement.innerText='京 · 华 系 列'">
+        </div>
+        
+        <div class="header-controls">
+            <button id="editBtn" class="edit-btn">编辑</button>
+            <div class="settings-box">
+                <div class="icon-circle">⚙</div>
+                <div class="icon-circle" id="infoBtn">i</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 左侧导航 -->
+        <div class="nav-sidebar">
+            <ul class="nav-list" id="navList">
+                <li style="padding:10px; color:#999;">正在加载...</li>
+            </ul>
+        </div>
+
+        <!-- 中间展示区 -->
+        <div class="display-area">
+            <div class="flip-container">
+                <div class="flipper" id="photoFlipper">
+                    
+                    <!-- 正面 -->
+                    <div class="card-front">
+                        <div class="photo-frame" id="photoFrame">
+                            <div class="corner tl"></div><div class="corner tr"></div>
+                            <div class="corner bl"></div><div class="corner br"></div>
+                            <img id="mainImage" src="" alt="图片加载中..." crossorigin="anonymous">
+                        </div>
+                    </div>
+
+                    <!-- 背面 -->
+                    <div class="card-back" id="cardBack">
+                        
+                        <!-- 左上角邮编 -->
+                        <div class="back-header-row">
+                            <div class="zip-box-group">
+                                <span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                        </div>
+
+                        <!-- 标题 -->
+                        <div class="back-title">京 · 华</div>
+
+                        <!-- 【核心修复】独立的视觉邮票框 (绝对定位，不会被切) -->
+                        <div class="stamp-box-visual"></div>
+
+                        <!-- 书写区 -->
+                        <div class="write-container">
+                            <!-- 背景横线 -->
+                            <div class="lines-bg" id="linesBg"></div>
+                            
+                            <!-- 可编辑文本区 -->
+                            <div id="messageInput" class="message-input-div" contenteditable="true">
+                                <!-- 逻辑占位块 (透明，只负责挤开文字) -->
+                                <div id="stampSpacer" class="stamp-spacer" contenteditable="false"></div>
+                            </div>
+                        </div>
+
+                        <!-- 底部 -->
+                        <div class="back-footer">
+                            <div class="postcard-mark">POSTCARD</div>
+                            <div class="zip-box-group bottom-right">
+                                <span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧栏 -->
+        <div class="info-wrapper">
+            <div class="info-card" id="infoCard">
+                <h2 class="location-title" id="infoTitle"></h2>
+                <p class="location-desc" id="infoDesc"></p>
+            </div>
+
+            <div class="tool-card" id="toolCard" style="display: none;">
+                <h3 class="tool-title">编辑工具</h3>
+                
+                <div class="tool-group">
+                    <label>字体样式</label>
+                    <select id="fontSelect">
+                        <option value="'KaiTi', '楷体', serif">楷体</option>
+                        <option value="'SimSun', '宋体', serif">宋体</option>
+                        <option value="'Microsoft YaHei', '黑体', sans-serif">黑体</option>
+                    </select>
+                </div>
+
+                <div class="tool-group">
+                    <label>文字颜色</label>
+                    <input type="color" id="colorSelect" value="#2b2d42">
+                </div>
+
+                <div class="tool-group">
+                    <label>字号与行距</label>
+                    <input type="range" id="sizeSelect" min="20" max="40" value="25">
+                </div>
+
+                <div class="tool-group checkbox-group">
+                    <input type="checkbox" id="indentCheck">
+                    <label for="indentCheck">段落首行缩进</label>
+                </div>
+
+                <div class="tool-actions">
+                    <button class="tool-btn clear" id="clearBtn">清空</button>
+                    <button class="tool-btn generate" id="generateBtn">生成</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="scroll-tip">↓ 滚动鼠标滚轮切换 ↓</div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

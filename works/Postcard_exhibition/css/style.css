@@ -1,0 +1,320 @@
+:root {
+    --cinnabar: #9e2a2b;       
+    --ink: #2b2d42;           
+    --body-bg: #f2f0e4;
+    --line-height: 50px; /* 默认行高 */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Noto Serif SC', serif;
+    background-color: var(--body-bg);
+    background-image: url("../images/background.jpg"); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(242, 240, 228, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: -1;
+}
+
+/* Header */
+header {
+    height: 100px;
+    flex-shrink: 0;
+    background-image: url('../images/header_bg.jpg'); 
+    background-size: cover; 
+    background-position: center;
+    border-bottom: 3px solid var(--ink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    overflow: visible;
+}
+
+.title-container { height: 100%; display: flex; align-items: center; overflow: visible; }
+.title-image { height: 200%; width: auto; object-fit: contain; transform: translateY(10px); filter: drop-shadow(0 2px 4px rgba(255,255,255,0.8)); }
+
+.header-controls { position: absolute; right: 40px; display: flex; align-items: center; gap: 20px; }
+.edit-btn { padding: 6px 15px; border: 2px solid var(--cinnabar); background: rgba(255,255,255,0.8); color: var(--cinnabar); font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+.edit-btn:hover, .edit-btn.active { background: var(--cinnabar); color: #fff; }
+.settings-box { display: flex; gap: 10px; }
+.icon-circle { width: 32px; height: 32px; border: 1px solid var(--ink); background: rgba(255,255,255,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
+.icon-circle:hover { background: var(--ink); color: #fff; }
+
+/* Main Layout */
+main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 160px 1fr 280px; 
+    padding: 15px 40px;
+    gap: 15px;
+    height: calc(100vh - 100px);
+    max-width: 1920px;
+    margin: 0 auto;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.nav-sidebar { height: 100%; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
+.nav-list { list-style: none; display: flex; flex-direction: column; gap: 15px; width: 100%; padding: 5px; }
+.nav-item {
+    font-size: 1rem; padding: 12px 0; text-align: center;
+    background: #fff; color: #555; cursor: pointer;
+    border-radius: 50px; 
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    white-space: nowrap;
+    font-weight: bold;
+}
+.nav-item.active {
+    background-color: var(--cinnabar); color: #fff;
+    transform: scale(1.05);
+}
+
+/* Center */
+.display-area {
+    display: flex; justify-content: center; align-items: center;
+    height: 100%;
+    position: relative;
+    perspective: 2000px;
+}
+
+.flip-container {
+    width: 100%;
+    max-width: 950px; 
+    max-height: 85vh; 
+    aspect-ratio: 1.5/1; 
+    position: relative;
+}
+
+.flipper {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+.flipper.flipped { transform: rotateY(180deg); }
+
+.card-front, .card-back {
+    position: absolute; width: 100%; height: 100%;
+    backface-visibility: hidden;
+    top: 0; left: 0;
+    border-radius: 2px;
+}
+
+/* 正面 */
+.card-front { z-index: 2; }
+.photo-frame {
+    width: 100%; height: 100%;
+    background: #fff; padding: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+}
+.photo-frame img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; 
+}
+.corner { position: absolute; width: 20px; height: 20px; border: 3px solid var(--cinnabar); }
+.tl { top: 6px; left: 6px; border-right: 0; border-bottom: 0; }
+.tr { top: 6px; right: 6px; border-left: 0; border-bottom: 0; }
+.bl { bottom: 6px; left: 6px; border-right: 0; border-top: 0; }
+.br { bottom: 6px; right: 6px; border-left: 0; border-top: 0; }
+
+/* 背面 */
+.card-back {
+    background: #fdfdfd;
+    transform: rotateY(180deg);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border: 1px solid #d0d0d0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 30px; 
+}
+
+/* 顶部区域 */
+.back-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.zip-box-group { display: flex; gap: 5px; }
+.zip-box-group span { width: 40px; height: 40px; border: 2px solid #5a4a42; display: inline-block; }
+
+.back-title {
+    font-family: 'Ma Shan Zheng', cursive; 
+    font-size: 2.5rem; 
+    color: #000;
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    transform: translateX(-50%);
+}
+
+/* 
+   --- 修复1：独立的视觉邮票框 ---
+   它直接定位在卡片右上角，层级最高，绝对不会消失，且自带遮挡光晕
+*/
+.stamp-box-visual {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 110px;
+    height: 130px;
+    
+    background-color: #fdfdfd; /* 实心白底遮挡内部横线 */
+    border: 2px solid #5a4a42; /* 边框 */
+    
+    /* 强力遮挡：15px 白色光晕，遮挡周围横线 */
+    box-shadow: 0 0 0 15px #fdfdfd; 
+    
+    z-index: 20; /* 确保在所有内容之上 */
+    pointer-events: none;
+}
+
+/* 
+   --- 修复2：书写区位置 ---
+   top 设为 8% 保证容器足够高能覆盖邮票区（为了L型排版），
+   但通过 padding 增加文字间距
+*/
+.write-container {
+    position: absolute;
+    top: 8%; 
+    left: 5%;
+    right: 5%;
+    bottom: 15%; 
+    overflow: hidden; 
+}
+
+/* 横线背景 */
+.lines-bg {
+    position: absolute; 
+    top: 45px; /* 横线整体下移，空出顶部 */
+    left: 0; width: 100%; height: 100%;
+    
+    background-image: linear-gradient(to bottom, transparent 96%, #888 96%);
+    background-size: 100% var(--line-height); 
+    background-repeat: repeat-y;
+    
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 可编辑文本区 */
+.message-input-div {
+    width: 100%; 
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    font-family: 'KaiTi', '楷体', serif; 
+    font-size: 25px; 
+    line-height: var(--line-height); 
+    color: #2b2d42;
+    outline: none;
+    overflow-x: hidden;
+    overflow-y: auto; 
+    word-break: break-all;
+    
+    /* 修复3：增加文字与上部的间距 */
+    padding-top: 40px; 
+}
+
+/* 
+   --- 修复4：逻辑占位块 (透明) ---
+   它只负责把文字挤开，视觉由上面的 .stamp-box-visual 负责
+*/
+.stamp-spacer {
+    float: right;
+    width: 110px;
+    height: 130px;
+    
+    margin-top: -30px; /* 位置微调以匹配视觉框 */
+    margin-right: 5px; 
+    margin-left: 35px; /* 增加左侧间距 */
+    margin-bottom: 10px;
+    
+    opacity: 0; /* 完全透明 */
+    pointer-events: none;
+}
+
+.message-input-div.indented div, 
+.message-input-div.indented p,
+.message-input-div.indented {
+    text-indent: 2em;
+}
+
+/* 底部区域 */
+.back-footer {
+    position: absolute;
+    bottom: 30px; 
+    left: 30px;
+    right: 30px;
+    height: 40px; 
+    pointer-events: none;
+}
+
+.postcard-mark {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem; letter-spacing: 4px; color: #6d6645; font-weight: bold; font-family: serif;
+}
+
+/* 右下角邮编 */
+.zip-box-group.bottom-right {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+/* 右侧栏 */
+.info-wrapper { height: 100%; display: flex; align-items: center; overflow: hidden; }
+.info-card, .tool-card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-left: 4px solid var(--cinnabar);
+    width: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    display: flex; flex-direction: column;
+}
+
+.location-title { font-family: 'Ma Shan Zheng', cursive; font-size: 2.5rem; margin-bottom: 20px; color: var(--ink); }
+
+.location-desc {
+    font-size: 1.05rem;
+    line-height: 1.6; 
+    color: #444;
+    text-align: justify;
+}
+
+/* 工具栏样式 */
+.tool-title { font-family: 'Ma Shan Zheng'; color: var(--cinnabar); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+.tool-group { margin-bottom: 12px; }
+.tool-group label { display: block; font-size: 0.9rem; margin-bottom: 5px; font-weight: bold; }
+.tool-group select, .tool-group input[type="color"], .tool-group input[type="range"] { width: 100%; padding: 5px; }
+.checkbox-group { display: flex; align-items: center; gap: 10px; }
+.checkbox-group input { width: auto; transform: scale(1.2); }
+.tool-actions { display: flex; gap: 10px; margin-top: 10px; }
+.tool-btn { flex: 1; padding: 10px; border: none; border-radius: 4px; cursor: pointer; color: #fff; font-weight: bold; }
+.tool-btn.clear { background: #999; }
+.tool-btn.generate { background: var(--cinnabar); }
